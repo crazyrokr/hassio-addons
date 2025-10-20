@@ -1,5 +1,5 @@
 name: Home Assistant Obsidian Remote
-version: "0.4"
+version: "0.5"
 slug: ha-obsidian-remote
 description: Runs Obsidian within your Home Assistant setup providing integration of live-features
 url: https://github.com/crazyrokr/ha-obsidian-remote
@@ -9,12 +9,9 @@ arch:
   - amd64
 init: false
 map:
-  - type: addon_config
-    read_only: False
-    path: /config
   - type: data
     read_only: False
-    path: /vaults
+    path: /config
 ingress: true
 ingress_port: 3001
 ports:
