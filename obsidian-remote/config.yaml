@@ -1,5 +1,5 @@
 name: Home Assistant Obsidian Remote
-version: "0.3"
+version: "0.4"
 slug: ha-obsidian-remote
 description: Runs Obsidian within your Home Assistant setup providing integration of live-features
 url: https://github.com/crazyrokr/ha-obsidian-remote
