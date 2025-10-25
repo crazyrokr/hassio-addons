@@ -1,5 +1,5 @@
 build_from:
-  amd64: "lscr.io/linuxserver/obsidian:latest"
+  amd64: "lscr.io/linuxserver/obsidian:v1.9.14-ls92"
 labels:
   org.opencontainers.image.title: "Home Assistant Obsidian Remote"
   org.opencontainers.image.description: "Allows to view and download files from Home Assistant backups"
