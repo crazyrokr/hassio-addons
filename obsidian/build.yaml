@@ -1,0 +1,8 @@
+build_from:
+  amd64: "lscr.io/linuxserver/obsidian:amd64-v1.9.14-ls92"
+  aarch64: "lscr.io/linuxserver/obsidian:arm64v8-v1.9.14-ls92"
+labels:
+  org.opencontainers.image.title: "Home Assistant Obsidian"
+  org.opencontainers.image.description: "Runs Obsidian within your Home Assistant setup providing integration of live-features"
+  org.opencontainers.image.source: "https://github.com/crazyrokr/hassio-addons/tree/main/obsidian"
+  org.opencontainers.image.licenses: "MIT license"
