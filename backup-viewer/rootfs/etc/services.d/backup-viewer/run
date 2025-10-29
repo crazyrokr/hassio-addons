@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bashio
+
+export HABV_BACKUP_FOLDER
+export HABV_BACKUP_PASSWORD
+HABV_BACKUP_FOLDER=$(bashio::config 'backup_folder')
+HABV_BACKUP_PASSWORD=$(bashio::config 'backup_password')
+bashio::log.info "Starting HTTP Server..."
+exec /usr/bin/bootstrap

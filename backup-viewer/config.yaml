@@ -1,0 +1,22 @@
+name: Backup Viewer
+version: "0.1"
+slug: backup-viewer
+description: Allows to browse and download files from backup archives
+url: https://github.com/crazyrokr/hassio-addons/tree/main/backup-viewer
+webui: http://[HOST]:[PORT:8099]
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+init: false
+map:
+  - backup:ro
+options:
+  backup_folder: /backup
+  backup_password: "***"
+schema:
+  backup_folder: str
+  backup_password: password?
+ingress: true

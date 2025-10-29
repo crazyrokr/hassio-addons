@@ -1,0 +1,7 @@
+configuration:
+  backup_folder:
+    name: Backup Folder
+    description: Backup Directory
+  backup_password:
+    name: Backup Password
+    description: Backup Encryption Key
