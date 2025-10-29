@@ -1,5 +1,5 @@
 name: Backup Viewer
-version: "0.1"
+version: "0.2"
 slug: backup-viewer
 description: Allows to browse and download files from backup archives
 url: https://github.com/crazyrokr/hassio-addons/tree/main/backup-viewer

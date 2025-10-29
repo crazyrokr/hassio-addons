@@ -19,6 +19,12 @@ class TarReader:
     self._passwords[os.path.normpath(backup_dir)] = password
     self._archive_ext = ('.tar', '.tar.gz', '.tgz')
     self._cpu_count = os.cpu_count() or 4
+    self._cache = None
+
+  def invalidate_cache(self):
+    if self._cache is not None:
+        print("TarReader cache invalidated.")
+    self._cache = None
 
   @contextmanager
   def extract(
@@ -185,6 +191,11 @@ class TarReader:
 
   def read_backup_dir(self) -> list[dict]:
     backup_dir = next(iter(self._passwords))
+
+    if self._cache is not None:
+      print("Returning cached result.")
+      return self._cache
+
     members = [
       backups
       for backups in sorted(os.listdir(backup_dir))
@@ -214,7 +225,9 @@ class TarReader:
           "name": members[idx],
           "error": str(e)
         }
-    return [FsMember(backup_dir, 'root', files).__dict__]
+    result = [FsMember(backup_dir, 'root', files).__dict__]
+    self._cache = result
+    return result
 
 
 class FsMember:
