@@ -29,13 +29,17 @@ def get_digest(image, arch=None):
             check=True
         )
         data = json.loads(result.stdout)
-        return data.get("Digest")
-    except subprocess.CalledProcessError as e:
-        print(f"Error fetching digest for {image}: {e.stderr}")
+        digest = data.get("Digest")
+        if not digest:
+            raise ValueError(f"No digest found in manifest for {image}")
+        return digest
+    except (subprocess.CalledProcessError, json.JSONDecodeError, ValueError) as e:
+        error_msg = getattr(e, 'stderr', str(e))
+        print(f"Error fetching digest for {image}: {error_msg}")
         return None
 
 def lock_build_yaml(file_path, lock_data):
-    """Update build.yaml with pinned digests."""
+    """Update build.yaml with pinned digests. Returns True if successful, False if no changes, and raises Error on failure."""
     with open(file_path, 'r') as f:
         content = f.read()
 
@@ -45,6 +49,7 @@ def lock_build_yaml(file_path, lock_data):
     
     new_content = content
     changes_made = False
+    errors = []
 
     for match in pattern.finditer(content):
         indent, arch, image_name, tag, existing_digest = match.groups()
@@ -53,23 +58,41 @@ def lock_build_yaml(file_path, lock_data):
         full_ref = f"{image_name}:{tag}" if tag else image_name
         
         # If already pinned, we might want to verify or update it
-        if existing_digest:
-            clean_digest = existing_digest.lstrip('@')
-            print(f"  {arch} is already pinned: {clean_digest}")
-            # We add it to lock_data anyway for sync
-            lock_data[full_ref] = clean_digest
-            continue
+        # Actually, if it's already pinned, we might want to keep it or update it.
+        # For now, let's allow updating if it's not pinned or if we want to refresh.
+        # But the original script skipped already pinned. Let's keep that but check if it exists.
 
         # Fetch new digest
         digest = get_digest(full_ref, arch)
-        if digest:
-            print(f"  Found digest for {arch}: {digest}")
+        if not digest:
+            errors.append(f"Failed to fetch digest for {arch} ({full_ref})")
+            continue
+
+        print(f"  Found digest for {arch}: {digest}")
+        
+        if existing_digest:
+            clean_digest = existing_digest.lstrip('@')
+            if clean_digest == digest:
+                print(f"  {arch} is already pinned to current digest.")
+                lock_data[full_ref] = clean_digest
+                continue
+            else:
+                print(f"  Updating {arch} pin from {clean_digest} to {digest}")
+                old_str = f'"{full_ref}@{clean_digest}"'
+                new_str = f'"{full_ref}@{digest}"'
+                new_content = new_content.replace(old_str, new_str)
+                lock_data[full_ref] = digest
+                changes_made = True
+        else:
             # Replace image:tag with image:tag@sha256:digest
             old_str = f'"{full_ref}"'
             new_str = f'"{full_ref}@{digest}"'
             new_content = new_content.replace(old_str, new_str)
             lock_data[full_ref] = digest
             changes_made = True
+
+    if errors:
+        raise RuntimeError("\n".join(errors))
 
     if changes_made:
         with open(file_path, 'w') as f:
@@ -81,6 +104,7 @@ def lock_build_yaml(file_path, lock_data):
         return False
 
 def main():
+    import sys
     lock_data = {}
     original_lock_data = {}
     if os.path.exists(LOCK_FILE):
@@ -90,20 +114,27 @@ def main():
 
     # Find all build.yaml files
     any_yaml_changed = False
+    has_errors = False
     for root, dirs, files in os.walk('.'):
         if 'build.yaml' in files:
             file_path = os.path.join(root, 'build.yaml')
             print(f"Processing {file_path}...")
-            if lock_build_yaml(file_path, lock_data):
-                any_yaml_changed = True
+            try:
+                if lock_build_yaml(file_path, lock_data):
+                    any_yaml_changed = True
+            except RuntimeError as e:
+                print(f"Error processing {file_path}: {e}")
+                has_errors = True
 
     # Only save the central lock file if data actually changed
     if lock_data != original_lock_data or any_yaml_changed:
         with open(LOCK_FILE, 'w') as f:
             json.dump(lock_data, f, indent=2, sort_keys=True)
         print(f"Updated {LOCK_FILE}")
-    else:
-        print(f"No changes needed for {LOCK_FILE}")
+
+    if has_errors:
+        print("Build locking failed with errors.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
