@@ -54,9 +54,10 @@ def lock_build_yaml(file_path, lock_data):
         
         # If already pinned, we might want to verify or update it
         if existing_digest:
-            print(f"  {arch} is already pinned: {existing_digest}")
+            clean_digest = existing_digest.lstrip('@')
+            print(f"  {arch} is already pinned: {clean_digest}")
             # We add it to lock_data anyway for sync
-            lock_data[full_ref] = existing_digest
+            lock_data[full_ref] = clean_digest
             continue
 
         # Fetch new digest
@@ -74,26 +75,35 @@ def lock_build_yaml(file_path, lock_data):
         with open(file_path, 'w') as f:
             f.write(new_content)
         print(f"Updated {file_path}")
+        return True
     else:
         print(f"No changes needed for {file_path}")
+        return False
 
 def main():
     lock_data = {}
+    original_lock_data = {}
     if os.path.exists(LOCK_FILE):
         with open(LOCK_FILE, 'r') as f:
             lock_data = json.load(f)
+            original_lock_data = json.loads(json.dumps(lock_data)) # Deep copy
 
     # Find all build.yaml files
+    any_yaml_changed = False
     for root, dirs, files in os.walk('.'):
         if 'build.yaml' in files:
             file_path = os.path.join(root, 'build.yaml')
             print(f"Processing {file_path}...")
-            lock_build_yaml(file_path, lock_data)
+            if lock_build_yaml(file_path, lock_data):
+                any_yaml_changed = True
 
-    # Save the central lock file
-    with open(LOCK_FILE, 'w') as f:
-        json.dump(lock_data, f, indent=2)
-    print(f"Updated {LOCK_FILE}")
+    # Only save the central lock file if data actually changed
+    if lock_data != original_lock_data or any_yaml_changed:
+        with open(LOCK_FILE, 'w') as f:
+            json.dump(lock_data, f, indent=2, sort_keys=True)
+        print(f"Updated {LOCK_FILE}")
+    else:
+        print(f"No changes needed for {LOCK_FILE}")
 
 if __name__ == "__main__":
     main()
