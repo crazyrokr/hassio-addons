@@ -26,7 +26,7 @@ jobs:
           # Use input branch if provided, otherwise fallback to ref_name
           BRANCH="${{ github.event.inputs.branch }}"
           if [ -z "$BRANCH" ]; then
-            BRANCH="${{ github.ref_name }}"
+            BRANCH="${{ github.head_ref }}"
           fi
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
 
