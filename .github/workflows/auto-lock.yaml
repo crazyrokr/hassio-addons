@@ -1,6 +1,7 @@
 name: Auto-Lock Images
 
 on:
+  pull_request:
   push:
     branches: ["**"]
     paths:
