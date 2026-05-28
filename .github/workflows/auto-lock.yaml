@@ -12,6 +12,10 @@ on:
         required: false
         default: ""
 
+permissions:
+  statuses: write
+  contents: read
+
 jobs:
   lock:
     runs-on: ubuntu-latest
