@@ -39,10 +39,24 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /var/lib/apt/lists
+          key: ${{ runner.os }}-apt-skopeo-${{ hashFiles('.github/workflows/auto-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
+
       - name: Install Skopeo
         run: |
-          sudo apt-get update
-          sudo apt-get install -y skopeo
+          if ! command -v skopeo &> /dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y skopeo
+          else
+            echo "Skopeo is already installed: $(skopeo --version)"
+          fi
 
       - name: Run Locker Script
         run: python3 scripts/lock_builds.py
