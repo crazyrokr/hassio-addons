@@ -2,10 +2,8 @@ name: Auto-Lock Images
 
 on:
   pull_request:
-  push:
+    types: [opened, synchronize]
     branches: ["**"]
-    paths:
-      - "**/build.yaml"
   workflow_dispatch:
     inputs:
       branch:
