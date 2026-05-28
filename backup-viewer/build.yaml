@@ -1,6 +1,6 @@
 build_from:
-  aarch64: "ghcr.io/hassio-addons/base-python/aarch64:17.0.0@sha256:47c6d3283894eb4d861490b756b117fe858e37c6fd808af6180db6471c2e263a"
-  amd64: "ghcr.io/hassio-addons/base-python/amd64:17.0.0@sha256:33cc4d415b142e389d0dae2810ba5af40011f5044fb5f031aecd6dd62c104ef9"
+  aarch64: "ghcr.io/hassio-addons/base-python/aarch64:18.0.0@sha256:5ed180de25a34cf587649a4bb01b5221c8c00d5c513b057bbd1c525aef835110"
+  amd64: "ghcr.io/hassio-addons/base-python/amd64:18.0.0@sha256:bd3cda13679c11fc1756938a7d5a3448902968b4a21b1d0ae4cf307ffa173051"
   armhf: "ghcr.io/hassio-addons/base-python/armhf:17.0.0@sha256:b5d9c99ada3d365b665165d0b7cb5583c15737766f007a998e5ce7bf86fc4a31"
   armv7: "ghcr.io/hassio-addons/base-python/armv7:17.0.0@sha256:1e1009fcaa54a8870f4a6e1212f189467b2a6a1d910e1d88c120390ee5560a2a"
   i386: "ghcr.io/hassio-addons/base-python/i386:17.0.0@sha256:6ab84ce12ffb8986f8a42a0475ad888f1d4355fe5303adc328dca2c8efe602ca"
