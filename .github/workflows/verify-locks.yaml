@@ -13,6 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /var/lib/apt/lists
+          key: ${{ runner.os }}-apt-tools-${{ hashFiles('.github/workflows/verify-locks.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
+
       - name: Check for unpinned images
         run: |
           errors=0
