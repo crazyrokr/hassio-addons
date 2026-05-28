@@ -16,7 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -31,9 +32,10 @@ jobs:
       - name: Run Locker Script
         run: python3 scripts/lock_builds.py
 
-      - name: Check for changes
+      - name: Pull and Check for changes
         id: git-check
         run: |
+          git pull --rebase origin ${{ github.ref_name }}
           if [ -n "$(git status --porcelain)" ]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else
