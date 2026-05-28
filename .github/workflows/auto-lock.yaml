@@ -61,5 +61,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: ${{ steps.branch-name.outputs.branch }}
-          commit_message: "chore: pin docker digests in build.yaml"
+          commit_message: "pin docker digests in build.yaml"
           file_pattern: "**/build.yaml docker-lock.json"
