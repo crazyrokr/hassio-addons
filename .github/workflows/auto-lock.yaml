@@ -6,6 +6,11 @@ on:
     paths:
       - "**/build.yaml"
   workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to analyze and lock"
+        required: false
+        default: ""
 
 jobs:
   lock:
@@ -13,10 +18,20 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Determine Branch
+        id: branch-name
+        run: |
+          # Use input branch if provided, otherwise fallback to ref_name
+          BRANCH="${{ github.event.inputs.branch }}"
+          if [ -z "$BRANCH" ]; then
+            BRANCH="${{ github.ref_name }}"
+          fi
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ steps.branch-name.outputs.branch }}
           fetch-depth: 0
 
       - name: Set up Python
@@ -45,5 +60,6 @@ jobs:
         if: steps.git-check.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
+          branch: ${{ steps.branch-name.outputs.branch }}
           commit_message: "chore: pin docker digests in build.yaml"
           file_pattern: "**/build.yaml docker-lock.json"
