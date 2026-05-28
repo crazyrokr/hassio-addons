@@ -4,6 +4,7 @@
   "ghcr.io/hassio-addons/base-python/amd64:17.0.0": "sha256:33cc4d415b142e389d0dae2810ba5af40011f5044fb5f031aecd6dd62c104ef9",
   "ghcr.io/hassio-addons/base-python/amd64:18.0.0": "sha256:bd3cda13679c11fc1756938a7d5a3448902968b4a21b1d0ae4cf307ffa173051",
   "ghcr.io/hassio-addons/base-python/armhf:17.0.0": "sha256:b5d9c99ada3d365b665165d0b7cb5583c15737766f007a998e5ce7bf86fc4a31",
+  "ghcr.io/hassio-addons/base-python/armv7:16.0.0": "sha256:f94fce500fa1362e4ce7990dab0fe5541d3f8fe5c5b3ec7dc0871b6a29a4cde4",
   "ghcr.io/hassio-addons/base-python/armv7:17.0.0": "sha256:1e1009fcaa54a8870f4a6e1212f189467b2a6a1d910e1d88c120390ee5560a2a",
   "ghcr.io/hassio-addons/base-python/i386:17.0.0": "sha256:6ab84ce12ffb8986f8a42a0475ad888f1d4355fe5303adc328dca2c8efe602ca",
   "lscr.io/linuxserver/obsidian:amd64-v1.12.7-ls131": "sha256:8dbb883573ac2f569e05c39c104c21dec764e06b4e2af49eb1df310d0c0e7555",
