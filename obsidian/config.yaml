@@ -1,5 +1,5 @@
 name: Obsidian
-version: "0.6.1"
+version: "0.6.2"
 slug: obsidian
 description: Runs Obsidian within your Home Assistant setup providing integration of live-features
 url: https://github.com/crazyrokr/ha-obsidian
@@ -34,3 +34,4 @@ ports:
   3000/tcp: null
   3001/tcp: null
   8082/tcp: null
+image: "ghcr.io/crazyrokr/ha-obsidian"
