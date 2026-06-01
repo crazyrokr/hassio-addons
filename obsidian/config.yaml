@@ -1,5 +1,5 @@
 name: Obsidian
-version: "0.6.4"
+version: "0.7.0"
 slug: obsidian
 description: Runs Obsidian within your Home Assistant setup providing integration of live-features
 url: https://github.com/crazyrokr/ha-obsidian
@@ -24,6 +24,7 @@ environment:
   TITLE: "Obsidian"
   NO_GAMEPAD: "true"
   DISABLE_DRI3: "true"
+  PIXELFLUX_WAYLAND: "false"
   SELKIES_UI_SHOW_SIDEBAR: "false"
   NO_DECOR: "true"
 ingress: true
