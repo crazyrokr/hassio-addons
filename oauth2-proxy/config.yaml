@@ -1,5 +1,5 @@
 name: Oauth2 Proxy
-version: "0.0.1"
+version: "0.0.2"
 slug: oauth2-proxy
 description: Oauth2 Proxy is a middleware enabling SSO authentication for any HTTP-endpoint
 url: https://github.com/crazyrokr/ha-oauth2-proxy
