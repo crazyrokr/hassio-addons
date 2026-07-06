@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "pinDigests": true,
+  "packageRules": [
+    {
+      "matchPackageNames": ["ghcr.io/hassio-addons/**", "lscr.io/linuxserver/**"],
+      "groupName": "base images",
+      "groupSlug": "base-images",
+      "schedule": ["at any time"]
+    }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["(^|/)build\\.yaml$"],
+      "matchStrings": [
+        "\\s+(?<arch>aarch64|amd64|armhf|armv7|i386):\\s+\"(?<depName>[^\"]+):(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
+}

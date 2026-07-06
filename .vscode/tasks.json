@@ -33,6 +33,17 @@
       }
     },
     {
+      "label": "Lock Build Digests",
+      "type": "shell",
+      "command": "python3 scripts/lock_builds.py",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Rebuild and Start Addon",
       "type": "shell",
       "command": "ha addons rebuild \"local_${input:addonName}\"; ha addons start \"local_${input:addonName}\"; docker logs --follow \"addon_local_${input:addonName}\"",

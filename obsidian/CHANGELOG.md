@@ -1,0 +1,2 @@
+## 0.7.0
+Update linuxserver/obsidian version to [v1.12.7-ls131](https://hub.docker.com/layers/linuxserver/obsidian/v1.12.7-ls131/images/sha256-6004393da17c50afacd9c81ae7130bf245cac3bb85f75d312b0142e9adfcc9ca)

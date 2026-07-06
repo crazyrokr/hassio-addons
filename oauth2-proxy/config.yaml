@@ -1,0 +1,53 @@
+name: Oauth2 Proxy
+version: "0.0.2"
+slug: oauth2-proxy
+description: Oauth2 Proxy is a middleware enabling SSO authentication for any HTTP-endpoint
+url: https://github.com/crazyrokr/ha-oauth2-proxy
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - ssl
+startup: services
+boot: manual
+options:
+  auth_url: https://myhassiodomain.duckdns.org/oauth2/callback
+  ssl: false
+  cert_file: fullchain.pem
+  key_file: privkey.pem
+  client_id: ""
+  client_secret: ""
+  oidc_issuer_url: ""
+  cookie_secret: ""
+  upstreams: http://host.docker.internal:8094
+  provider: oidc
+  scope: openid email profile groups
+  reverse_proxy: true
+  email_domains: mydomain.com
+  insecure_oidc_allow_unverified_email: true
+  cookie_secure: true
+  http_address: 0.0.0.0:4180
+  skip_provider_button: true
+schema:
+  auth_url: str
+  ssl: bool
+  cert_file: str?
+  key_file: str?
+  client_id: str
+  client_secret: str
+  oidc_issuer_url: str
+  cookie_secret: str
+  upstreams: str
+  provider: str
+  scope: str
+  reverse_proxy: bool
+  email_domains: str
+  insecure_oidc_allow_unverified_email: bool
+  cookie_secure: bool
+  http_address: str
+  skip_provider_button: bool
+  cookie_name: str?
+ports:
+  4180/tcp: 4180
+image: "ghcr.io/crazyrokr/ha-oauth2-proxy"
