@@ -1,0 +1,23 @@
+name: Gemini CLI
+version: "0.0.1"
+slug: gemini-cli
+description: Runs Gemini CLI within your Home Assistant setup providing remote development vid web-interface
+url: https://github.com/crazyrokr/ha-gemini-cli
+webui: http://[HOST]:[PORT:4009]
+arch:
+  - aarch64
+  - amd64
+init: false
+tmpfs: true
+map:
+  - type: addon_config
+    read_only: False
+    path: /config
+  - type: share
+    read_only: False
+    path: /share
+ingress: true
+ingress_port: 4009
+ports:
+  4009/tcp: 4009
+image: "ghcr.io/crazyrokr/ha-gemini-cli"

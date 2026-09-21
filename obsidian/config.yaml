@@ -1,8 +1,8 @@
 name: Obsidian
-version: "0.60"
-slug: ha-obsidian
+version: "0.7.0"
+slug: obsidian
 description: Runs Obsidian within your Home Assistant setup providing integration of live-features
-url: https://github.com/crazyrokr/hassio-addons/tree/main/obsidian
+url: https://github.com/crazyrokr/ha-obsidian
 webui: http://[HOST]:[PORT:3000]
 panel_icon: "mdi:note-edit"
 arch:
@@ -24,8 +24,7 @@ environment:
   TITLE: "Obsidian"
   NO_GAMEPAD: "true"
   DISABLE_DRI3: "true"
-  HARDEN_DESKTOP: "true"
-  HARDEN_OPENBOX: "true"
+  PIXELFLUX_WAYLAND: "false"
   SELKIES_UI_SHOW_SIDEBAR: "false"
   NO_DECOR: "true"
 ingress: true
@@ -34,3 +33,4 @@ ports:
   3000/tcp: null
   3001/tcp: null
   8082/tcp: null
+image: "ghcr.io/crazyrokr/ha-obsidian"
