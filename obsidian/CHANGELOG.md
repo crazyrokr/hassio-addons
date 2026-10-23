@@ -1,3 +1,6 @@
+## 0.9.1
+Update linuxserver/obsidian version to [v1.14.4-ls149](https://hub.docker.com/layers/linuxserver/obsidian/v1.14.4-ls149/images/sha256-956cb0841329585e65e943351a5c1180ae72de5da3704506dee3b35d3155337e)
+
 ## 0.9.0
 ✨ Features — Adaptive theme (#24)
 
