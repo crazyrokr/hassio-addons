@@ -13,17 +13,18 @@ the exposed port.
 
 By default the blog uses Ghost's built-in SQLite database, stored in the
 persisted config volume — no separate database container needed. An external
-MariaDB/MySQL database can be selected through the add-on options instead.
+MySQL 8 database can be selected through the add-on options instead.
 
 ## Features
 
-- **Fast first start.** The Ghost 5.130.6 application is pre-installed in the
-  add-on image (no download at runtime, no Python in the final image); the
-  first boot only generates the production config and starts the blog in a
-  couple of seconds.
-- **SQLite by default, MariaDB if you prefer it.** The built-in SQLite file
-  lives in the blog's content volume. Set `db_type` to `mysql` in the options
-  to point the blog at an external MariaDB/MySQL database instead.
+- **Fast first start.** The Ghost 6.73.0 application is pre-installed in the
+  add-on image (no download at runtime, no Python anywhere); the first boot
+  only generates the production config and starts the blog in a couple of
+  seconds.
+- **SQLite by default, MySQL 8 if you prefer it.** The built-in SQLite
+  file lives in the blog's content volume. Set `db_type` to `mysql` in the
+  options to point the blog at an external MySQL 8 database instead (Ghost 6
+  no longer supports MariaDB).
 - **Two ways in.** The exposed 2368 port for the blog (direct
   `http://<host>:2368`, or through a TLS reverse proxy on a domain) and the
   add-on's ingress side panel, which opens the Ghost admin panel (`/ghost/`)
@@ -35,16 +36,17 @@ MariaDB/MySQL database can be selected through the add-on options instead.
   panel and the **Open Web UI** button land on the admin panel.
 - **Theme-aware sign-in.** When the admin panel is opened through the Home
   Assistant side panel, the sign-in, setup and reset screens follow the
-  active HA theme (light or dark), including the spinner while the account
-  loads after signing in, and the sign-in screen shows the add-on logo.
-  Direct-port access is unchanged, and the signed-in admin keeps Ghost's
-  own Night shift toggle.
+  active HA theme (light or dark) using Ghost 6's own dark theme, including
+  the spinner while the account loads after signing in, and the sign-in
+  screen shows the add-on logo instead of the site icon. Direct-port access
+  is unchanged, and the signed-in admin keeps Ghost's own Night shift
+  toggle.
 - **Safe by design.** The blog runs as a dedicated non-root `ghost` user; the
   container runs under the standard Home Assistant `debian-base` image with
   s6 supervision.
 - **Reproducible image.** The base image is digest-pinned and the Ghost /
-  Ghost CLI / Node versions are pinned in the build (kept current by
-  Renovate); the Ghost CLI is used at build time only.
+  Ghost CLI / pnpm / Node versions are pinned in the build (kept current by
+  Renovate); the Ghost CLI and pnpm are used at build time only.
 - **Log in the UI.** The Ghost application log (boot, requests, errors)
   is visible in the add-on's **Log** tab; the log files themselves stay in
   the volume at `ghost/content/logs`. Set `log_console` to `false` to keep
@@ -75,7 +77,9 @@ MariaDB/MySQL database can be selected through the add-on options instead.
 
 4. **Create the admin account.** Open the blog at that origin and visit
    `/ghost/` — the setup wizard asks for the admin name, email, and
-   password. The blog front page is served at `/`.
+   password. The blog front page is served at `/`. Ghost 6 asks for an
+   emailed 6-digit verification code when you sign in from a new browser
+   or device; configure the email options below to receive it.
 
 5. **(Optional) External database.** In **Settings → add-on configuration**
    set `db_type` to `mysql` and fill in `db_host`, `db_port`, `db_user`,
@@ -86,8 +90,8 @@ MariaDB/MySQL database can be selected through the add-on options instead.
    set `mail_host`, `mail_port`, `mail_secure`, `mail_user`,
    `mail_password` of your SMTP relay plus `mail_from` (the sender address
    your provider accepts), then restart the add-on — member magic links,
-   password resets, and notifications are then delivered through that
-   relay.
+   password resets, notifications, and the staff sign-in verification code
+   for a new browser are then delivered through that relay.
 
 ## Access
 
@@ -125,7 +129,7 @@ panel:
 | Option       | Schema                          | Description                                                        |
 | ------------ | ------------------------------- | ------------------------------------------------------------------ |
 | `url`        | `str`                           | The exact origin visitors use to reach the blog (e.g. `https://blog.example.com` or `http://192.168.1.10:2368`). See [Access](#access). |
-| `db_type`    | `choice(sqlite, mysql, default=sqlite)` | Database backend: the built-in SQLite file, or an external MariaDB/MySQL server. |
+| `db_type`    | `choice(sqlite, mysql, default=sqlite)` | Database backend: the built-in SQLite file, or an external MySQL 8 server. |
 | `db_host`    | `str`                           | Host of the external database (required with `db_type: mysql`).    |
 | `db_port`    | `int(3306)`                     | Port of the external database.                                      |
 | `db_user`    | `str`                           | User of the external database (required with `db_type: mysql`).    |
@@ -140,7 +144,10 @@ panel:
 | `mail_from`  | `str`                           | Sender address, e.g. `Your Blog <noreply@yourdomain.com>` (Ghost falls back to a generated one without it). |
 | `log_console`| `bool`                          | Also print the application log to the container console (the add-on **Log** tab). `false` keeps the log files in the volume only. |
 
-With `db_type: mysql` the add-on starts Ghost with the
+Ghost 6 supports **MySQL 8** only — MariaDB is no longer supported (its
+migrations fail on MySQL 8-only check constraints), so a blog previously
+pointed at MariaDB must be migrated to MySQL 8. With `db_type: mysql` the
+add-on starts Ghost with the
 `database__client=mysql` / `database__connection__*` environment variables
 (the same mechanism the official Ghost docker image uses), which Ghost's
 config loader merges above the generated config file. All of `db_host`,
@@ -174,10 +181,10 @@ available for extra data.
 
 - [`docs/adr/0001-ghost-addon-architecture.md`](docs/adr/0001-ghost-addon-architecture.md) —
   architecture decision record: multi-stage image build with the Ghost
-  application pre-installed (no Python in the final image), first-boot
-  volume preparation, SQLite default with a prebuilt binary baked in at
-  build time, external database via add-on options, and the removal of the
-  template leftovers.
+  application pre-installed (installed with pnpm, no Python anywhere),
+  first-boot volume preparation, SQLite default through Ghost 6's
+  better-sqlite3 prebuilt binary, external database via add-on options, and
+  the removal of the template leftovers.
 
 ## License
 
