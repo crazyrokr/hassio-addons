@@ -1,6 +1,5 @@
 ## 0.9.3
-Update linuxserver/obsidian version to [v1.14.5-ls150](https://hub.docker.com/layers/linuxserver/obsidian/v1.14.5-ls150/images/sha256-0bf1a3caea94802cbe9fd61dbd241f66e6f8b179f8bbacc222dd5ed92699d758)
-[Obsidian v1.14.5 changelog](https://obsidian.md/changelog/2026-10-22-desktop-v1.14.5/)
+Update Obsidian to [v1.14.5](https://obsidian.md/changelog/2026-10-22-desktop-v1.14.5/) and linuxserver to [ls150](https://hub.docker.com/layers/linuxserver/obsidian/v1.14.5-ls150/images/sha256-0bf1a3caea94802cbe9fd61dbd241f66e6f8b179f8bbacc222dd5ed92699d758)
 
 ## 0.9.1
 Update linuxserver/obsidian version to [v1.14.4-ls149](https://hub.docker.com/layers/linuxserver/obsidian/v1.14.4-ls149/images/sha256-956cb0841329585e65e943351a5c1180ae72de5da3704506dee3b35d3155337e)
