@@ -1,0 +1,57 @@
+name: Ghost
+version: "0.1.0"
+slug: ghost
+description: Runs Ghost within your Home Assistant setup providing integration of live-features
+image: "ghcr.io/crazyrokr/ha-ghost"
+url: https://github.com/crazyrokr/ha-ghost/tree/main/ghost
+webui: http://[HOST]:[PORT:2368]/ghost/
+panel_icon: "mdi:ghost-outline"
+arch:
+  - aarch64
+  - amd64
+init: false
+tmpfs: true
+map:
+  - type: addon_config
+    read_only: False
+    path: /config
+  - type: share
+    read_only: False
+    path: /share
+ingress: true
+ingress_entry: ghost/
+ingress_port: 2369
+ports:
+  2368/tcp: 2368
+options:
+  url: ""
+  db_type: sqlite
+  db_host: ""
+  db_port: 3306
+  db_user: ""
+  db_password: ""
+  db_name: ""
+  mail_transport: SMTP
+  mail_host: ""
+  mail_port: 587
+  mail_secure: false
+  mail_user: ""
+  mail_password: ""
+  mail_from: ""
+  log_console: true
+schema:
+  url: str
+  db_type: list(sqlite|mysql)
+  db_host: str
+  db_port: int
+  db_user: str
+  db_password: password
+  db_name: str
+  mail_transport: list(SMTP|direct)
+  mail_host: str
+  mail_port: int
+  mail_secure: bool
+  mail_user: str
+  mail_password: password
+  mail_from: str
+  log_console: bool
