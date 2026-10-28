@@ -1,3 +1,11 @@
+## 1.0.0
+Links now open on your device!
+
+- `http(s)` links open in the browser viewing the add-on, with a fallback toast when popups are blocked.
+- `mailto:`, `tel:` and `sms:` open the viewing device's mail, dialer or messages app.
+- `obsidian://` deep links (such as plugin links) open in the streamed Obsidian app.
+- Local attachments and other `xdg-open` calls still open in the container.
+
 ## 0.9.3
 Update Obsidian to [v1.14.5](https://obsidian.md/changelog/2026-10-22-desktop-v1.14.5/) and linuxserver to [ls150](https://hub.docker.com/layers/linuxserver/obsidian/v1.14.5-ls150/images/sha256-0bf1a3caea94802cbe9fd61dbd241f66e6f8b179f8bbacc222dd5ed92699d758)
 

@@ -42,6 +42,11 @@ all without a restart.
   stream" screen, the streaming letterbox bars, and the dashboard chrome
   (sidebar, settings, notifications) track the active HA theme from first
   paint.
+- **Links open on your device.** External `http(s)`, `mailto:`, `tel:` and
+  `sms:` links clicked in the streamed Obsidian open on the device viewing
+  the add-on — a new tab when allowed, or a one-click toast. `obsidian://`
+  deep links open in the streamed app itself. Local attachments and other
+  `xdg-open` calls still open in the in-container desktop.
 - **Safe by design.** Theme writes go through a loopback-only daemon
   (`127.0.0.1:8090`) behind nginx, with strict API semantics (400 on
   unknown themes, 404 elsewhere) and atomic, ownership-safe writes to the
@@ -85,11 +90,27 @@ end-to-end verification guide live in [`docs/ha-obsidian-theme-sync.md`](docs/ha
 the decision record is in
 [`docs/adr/0001-obsidian-ha-theme-sync.md`](docs/adr/0001-obsidian-ha-theme-sync.md).
 
+## How links open
+
+Obsidian's `xdg-open` and `xdg-email` calls for external links are
+intercepted by PATH overlays and posted to a second loopback daemon. A
+client script in the dashboard holds a 60 s hanging GET and opens the
+delivered `http(s)` URL in the viewing browser, with a clickable toast when
+the browser blocks the popup or when the link is `mailto:`, `tel:` or
+`sms:`. A single `obsidian://` deep link takes a different route: it is
+handed to the in-container app so the plugin or note screen opens in
+streamed Obsidian. The full design, the verified base-image facts, and the
+live verification steps are in
+[`docs/ha-obsidian-open-links.md`](docs/ha-obsidian-open-links.md).
+
 ## Documentation
 
 - [`docs/ha-obsidian-theme-sync.md`](docs/ha-obsidian-theme-sync.md) — theme
   synchronization: architecture, verified base-image facts, step-by-step
   breakdown, troubleshooting.
+- [`docs/ha-obsidian-open-links.md`](docs/ha-obsidian-open-links.md) — external
+  links: architecture, base-image facts, protocol, troubleshooting,
+  verification.
 - [`docs/adr/0001-obsidian-ha-theme-sync.md`](docs/adr/0001-obsidian-ha-theme-sync.md) —
   architecture decision record for the theme sync.
 - [`docs/security-gates-implementation.md`](docs/security-gates-implementation.md) —
