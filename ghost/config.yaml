@@ -1,5 +1,5 @@
 name: Ghost
-version: "0.2.0"
+version: "0.2.2"
 slug: ghost
 description: Runs Ghost within your Home Assistant setup providing integration of live-features
 image: "ghcr.io/crazyrokr/ha-ghost"
@@ -12,7 +12,7 @@ arch:
 init: false
 tmpfs: true
 map:
-  - type: addon_config
+  - type: app_config
     read_only: False
     path: /config
   - type: share
