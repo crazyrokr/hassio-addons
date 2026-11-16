@@ -1,3 +1,7 @@
+## 1.0.1
+Update Obsidian to [v1.15.1](https://obsidian.md/changelog/2026-11-03-desktop-v1.15.1/),[v1.15.1](https://obsidian.md/changelog/2026-11-12-desktop-v1.15.1/) and linuxserver to [ls153](https://github.com/linuxserver/docker-obsidian/compare/v1.15.0-ls152...v1.15.1-ls153)
+Update Obsidian to [v1.15.0](https://obsidian.md/changelog/2026-10-22-desktop-v1.15.0/),[v1.15.0](https://obsidian.md/changelog/2026-11-02-desktop-v1.15.0/) and linuxserver to [ls152](https://github.com/linuxserver/docker-obsidian/compare/v1.14.5-ls151...v1.15.0-ls152)
+
 ## 1.0.0
 Links now open on your device!
 

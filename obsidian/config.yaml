@@ -1,5 +1,5 @@
 name: Obsidian
-version: "1.0.0"
+version: "1.0.1"
 slug: obsidian
 description: Runs Obsidian within your Home Assistant setup providing integration of live-features
 url: https://github.com/crazyrokr/ha-obsidian
