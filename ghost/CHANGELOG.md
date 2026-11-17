@@ -1,3 +1,6 @@
+## 0.2.6
+Update ghost to [v6.78.0](https://github.com/TryGhost/Ghost/releases/tag/v6.78.0)
+
 ## 0.2.5
 Update ghost to [v6.77.0](https://github.com/TryGhost/Ghost/releases/tag/v6.77.0)
 
